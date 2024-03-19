@@ -12,6 +12,7 @@ const connectionString = process.env.MONGO_URL
 // Routes
 
 const accountRouter = require("./routes/accountRouter");
+const categoryRouter = require("./routes/categoryRoutes")
 
  
 
@@ -24,8 +25,8 @@ app.use(cors())
 
 // login , register
 app.use("/api/auth", accountRouter);
-
-app.use(auth)
+app.use(auth);
+app.use("/api/categories", categoryRouter)
 
 
 app.get("/", (req, res)=>{
