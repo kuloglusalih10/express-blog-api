@@ -1,0 +1,8 @@
+
+
+
+const addNewPost = (req, res) => {
+
+    
+    
+}

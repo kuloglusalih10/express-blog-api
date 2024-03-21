@@ -1,13 +1,26 @@
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
-const User = require("../models/User")
+const User = require("../models/User");
+const loginValidation = require("../validations/loginValidation");
+const registerValidation = require("../validations/registerValidation")
 
 
 const postRegister = async (req, res) => {
     try {
 
+
         const { name, email } = req.body;
         const password = await bcrypt.hash(req.body.password, 12);
+
+        const {error} = registerValidation.validate({name, email, password});
+
+        if(error){
+            return res.json({
+                res : false, 
+                status : 400,
+                message : error.details[0].message
+            })
+        }
 
         const user = await User.findOne({ email });
         if (user) {
@@ -46,6 +59,16 @@ const postRegister = async (req, res) => {
     try {
 
         const {email , password} = req.body;
+
+        const {error} = loginValidation.validate({email,password});
+
+        if(error){
+            return res.json({
+                res: false,
+                status: 400,
+                message: error.details[0].message
+            })
+        }
 
         const user = await User.findOne({email});
 
