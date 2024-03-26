@@ -15,7 +15,7 @@ const postRegister = async (req, res) => {
         const {error} = registerValidation.validate({name, email, password});
 
         if(error){
-            return res.json({
+            res.json({
                 res : false, 
                 status : 400,
                 message : error.details[0].message

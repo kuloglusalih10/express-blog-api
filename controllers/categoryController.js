@@ -15,7 +15,7 @@ const addCategory = async (req ,res) => {
 
         if(!name){
 
-            return res.json({
+            res.json({
                 res:false,
                 status: 404,
                 message: "Hatalı bir istekte bulundunuz !"
@@ -26,7 +26,7 @@ const addCategory = async (req ,res) => {
 
         await newCategory.save();
 
-        return res.json({
+        res.json({
             res: true,
             status: 201,
             data : newCategory
@@ -47,6 +47,7 @@ const addCategory = async (req ,res) => {
 
 
 const getAllCategory = async (req, res) => {
+    
     try {
 
         const categories = await Category.find({});
