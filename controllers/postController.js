@@ -42,7 +42,6 @@ const addNewPost = async (req, res) => {
     
 }
 
-
 const getAllPost = async (req,res)=>{
 
     try {
@@ -65,5 +64,70 @@ const getAllPost = async (req,res)=>{
     }
 }
 
+const getPostById = async (req, res) => {
+    try {
 
-module.exports = {addNewPost ,getAllPost}
+        const {id} = req.body;
+
+        const post = await Post.findById(id).populate({path : 'author'});
+
+        if(!post){
+
+            return res.json({
+                res :false,
+                status: 500,
+                message : "Kayıt Bulunamadı"
+            });
+        }
+
+        return res.json({
+            res:true,
+            status : 200,
+            data : post
+        });
+
+
+        
+    } catch (error) {
+
+        return res.json({
+            res :false, 
+            status : 500,
+            message : error.message
+        })
+    }
+}
+
+const deletePostById = async (req, res)=>{
+    try {
+        
+        const {id} = req.body;
+
+        const post = await  Post.findByIdAndDelete(id);
+
+        if(!post){
+            return res.json({
+                res:false,
+                status : 404,
+                message : "Post Bulunamadı"
+            })
+        }
+
+        return res.json({
+            res : true,
+            status : 202,
+            data : post
+        })
+
+
+    } catch (error) {
+        return res.json({
+            res: false,
+            status : 500,
+            message: error.message
+        })
+    }
+}
+
+
+module.exports = {addNewPost ,getAllPost , getPostById , deletePostById}
