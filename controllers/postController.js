@@ -11,7 +11,7 @@ const addNewPost = async (req, res) => {
         const {error} = addPostValidation.validate(post);
 
         if(error){
-            res.json({
+            return res.json({
                 res : false, 
                 status : 400,
                 message : error.details[0].message
@@ -22,7 +22,7 @@ const addNewPost = async (req, res) => {
 
         await newPost.save();
 
-        res.json({
+        return res.json({
             res :true,
             status : 202,
             data : newPost
@@ -30,7 +30,7 @@ const addNewPost = async (req, res) => {
 
     } catch (error) {
 
-        res.json({
+        return res.json({
 
             res :false,
             status: 500 ,
@@ -47,9 +47,9 @@ const getAllPost = async (req,res)=>{
 
     try {
         
-        const posts = await Post.find({});
+        const posts = await Post.find({}).populate({path : 'author'});
 
-        res.json({
+        return res.json({
             res :true,
             status :200,
             data : posts
@@ -57,7 +57,7 @@ const getAllPost = async (req,res)=>{
         
     } catch (error) {
 
-        res.json({
+        return res.json({
             res : false,
             status : 500,
             message : error.message

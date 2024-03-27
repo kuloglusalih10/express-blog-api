@@ -15,7 +15,7 @@ const addCategory = async (req ,res) => {
 
         if(!name){
 
-            res.json({
+            return res.json({
                 res:false,
                 status: 404,
                 message: "Hatalı bir istekte bulundunuz !"
@@ -26,7 +26,7 @@ const addCategory = async (req ,res) => {
 
         await newCategory.save();
 
-        res.json({
+        return res.json({
             res: true,
             status: 201,
             data : newCategory
@@ -36,7 +36,7 @@ const addCategory = async (req ,res) => {
         
     } catch (error) {
 
-        res.json({
+        return res.json({
             res:false,
             status: 500,
             message: error.message

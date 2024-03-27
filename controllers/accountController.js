@@ -15,7 +15,7 @@ const postRegister = async (req, res) => {
         const {error} = registerValidation.validate({name, email, password});
 
         if(error){
-            res.json({
+            return res.json({
                 res : false, 
                 status : 400,
                 message : error.details[0].message
@@ -25,7 +25,7 @@ const postRegister = async (req, res) => {
         const user = await User.findOne({ email });
         if (user) {
 
-            res.json({
+            return res.json({
                 res:false,
                 status: 400,
                 message: 'Bu email zaten kullanımda',
@@ -37,7 +37,7 @@ const postRegister = async (req, res) => {
 
             await newUser.save();
 
-            res.json({
+            return res.json({
                 res : true,
                 status: 200,
                 message: 'Kullanıcı kaydı başarılı '
@@ -45,7 +45,7 @@ const postRegister = async (req, res) => {
         }
     } catch (err) {
         
-        res.json({
+        return res.json({
             res: false,
             status: 500,
             message: err.message,
