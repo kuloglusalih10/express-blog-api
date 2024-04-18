@@ -14,6 +14,7 @@ const connectionString = process.env.MONGO_URL
 const accountRouter = require("./routes/accountRouter");
 const categoryRouter = require("./routes/categoryRoutes")
 const postRouter = require("./routes/postRoutes");
+const commentRouter = require("./routes/commentRoutes");
 
  
 
@@ -38,12 +39,12 @@ app.use("/api/auth", accountRouter);
 app.use(auth);
 app.use("/api/categories", categoryRouter);
 app.use("/api/posts", postRouter);
+app.use("/api/comments", commentRouter);
 
 
 
 app.get("/", (req, res)=>{
-    
-    res.send("Hello world")
+    res.send("Hello World");
 })
 
 
